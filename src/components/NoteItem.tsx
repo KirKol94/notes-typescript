@@ -10,7 +10,7 @@ export const NoteItem: React.FC<INoteItemProps> = ({ note, notes, setNotes }) =>
     const { id, tittle, text } = note
 
     const handleRemove = () => {
-        if (window.confirm('Удалить')) {
+        if (window.confirm('Are you sure?')) {
             setNotes(notes.filter(note => note.id !== id))
         }
     }
@@ -19,6 +19,7 @@ export const NoteItem: React.FC<INoteItemProps> = ({ note, notes, setNotes }) =>
         <li className='list-group-item d-flex justify-content-between mt-2' >
             <div>
                 <h3> {tittle} </h3>
+                {tittle && <hr />}
                 <p className="notetext">{text}</p>
             </div>
 

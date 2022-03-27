@@ -2,8 +2,8 @@ import { useState } from "react"
 import { INote } from "../types/types"
 
 interface IFormCreateProps {
+    notes: INote[]
     setNotes: (notes: INote[]) => void
-    notes: Array<INote>
 }
 
 export const FormCreate: React.FC<IFormCreateProps> = ({ setNotes, notes }) => {
