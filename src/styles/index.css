@@ -1,3 +1,8 @@
+.navbar-brand {
+    cursor: pointer;
+    user-select: none;
+}
+
 li {
     overflow-x: visible;
     white-space: pre-wrap;
