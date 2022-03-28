@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { INote } from '../types/types';
 
@@ -6,37 +7,39 @@ interface IFormCreateProps {
   setNotes: (notes: INote[]) => void;
 }
 
-export const FormCreate: React.FC<IFormCreateProps> = ({
-  notes,
-  setNotes,
-}) => {
+export const FormCreate: React.FC<IFormCreateProps> = ({ notes, setNotes }) => {
   const [noteTittle, setNoteTittle] = useState<string>('');
   const [noteText, setNoteText] = useState<string>('');
 
-  const handleChangeTittle: React.ChangeEventHandler<
-    HTMLInputElement
-  > = (e) => {
+  const handleChangeTittle: React.ChangeEventHandler<HTMLInputElement> = (
+    e
+  ) => {
     setNoteTittle(e.target.value);
   };
 
-  const handleChangeText: React.ChangeEventHandler<
-    HTMLTextAreaElement
-  > = (e) => {
+  const handleChangeText: React.ChangeEventHandler<HTMLTextAreaElement> = (
+    e
+  ) => {
     setNoteText(e.target.value);
   };
 
   const handleSubmit = () => {
     const isValid = noteText || noteTittle;
+    const newNote = {
+      id: Date.now(),
+      tittle: noteTittle,
+      text: noteText,
+    };
 
     if (isValid) {
-      setNotes([
-        {
-          id: Date.now(),
-          tittle: noteTittle,
-          text: noteText,
-        },
-        ...notes,
-      ]);
+      setNotes([...notes, newNote]);
+
+      const url =
+        'https://sheet.best/api/sheets/aaa850d5-1be5-4970-bd76-2c982ae78fea';
+
+      axios.post(url, newNote).then((response) => {
+        console.log('success');
+      });
     }
 
     setNoteTittle('');
@@ -63,10 +66,7 @@ export const FormCreate: React.FC<IFormCreateProps> = ({
         />
       </div>
 
-      <button
-        className={`w-100 btn btn-dark`}
-        onClick={handleSubmit}
-      >
+      <button className={`w-100 btn btn-dark`} onClick={handleSubmit}>
         Add note
       </button>
     </div>

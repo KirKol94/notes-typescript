@@ -13,9 +13,9 @@ export const Header: React.FC<IHeaderProps> = ({
   setSearch,
   setIsDarkMode,
 }) => {
-  const handleSearchChange: React.ChangeEventHandler<
-    HTMLInputElement
-  > = (e) => {
+  const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (
+    e
+  ) => {
     setSearch(e.target.value);
   };
 
@@ -24,7 +24,7 @@ export const Header: React.FC<IHeaderProps> = ({
       <nav className="navbar navbar-dark bg-dark">
         <div className="container">
           <span
-            className="navbar-brand"
+            className="navbar-brand user-select-none"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
@@ -44,10 +44,7 @@ export const Header: React.FC<IHeaderProps> = ({
         </div>
       </nav>
 
-      <ModalSettings
-        isDarkMode={isDarkMode}
-        setIsDarkMode={setIsDarkMode}
-      />
+      <ModalSettings isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
     </>
   );
 };

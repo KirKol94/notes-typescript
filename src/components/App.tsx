@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { INote } from '../types/types';
 import { FormCreate } from './FornCreate';
@@ -11,23 +12,17 @@ export const App: React.FC = () => {
 
   const searchedNotes = notes.filter(
     (note: INote) =>
-      note.text
-        ?.toLowerCase()
-        .includes(search.toLowerCase()) ||
-      note.tittle
-        ?.toLowerCase()
-        .includes(search.toLowerCase())
+      note.text?.toLowerCase().includes(search.toLowerCase()) ||
+      note.tittle?.toLowerCase().includes(search.toLowerCase())
   );
 
   useEffect(() => {
-    const lsNotes = JSON.parse(
-      localStorage.getItem('notes') || '{}'
-    );
-    const lsIsDarkMode = JSON.parse(
-      localStorage.getItem('isDarkMode') || '{}'
-    );
+    const lsIsDarkMode = JSON.parse(localStorage.getItem('isDarkMode') || '{}');
 
-    setNotes(lsNotes);
+    axios
+      .get('https://sheet.best/api/sheets/aaa850d5-1be5-4970-bd76-2c982ae78fea')
+      .then((res) => setNotes(res.data));
+
     setIsDarkMode(lsIsDarkMode);
   }, []);
 
@@ -36,10 +31,7 @@ export const App: React.FC = () => {
   }, [notes]);
 
   useEffect(() => {
-    localStorage.setItem(
-      'isDarkMode',
-      JSON.stringify(isDarkMode)
-    );
+    localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
   }, [isDarkMode]);
 
   return (
@@ -51,9 +43,7 @@ export const App: React.FC = () => {
         setIsDarkMode={setIsDarkMode}
       />
 
-      {!search && (
-        <FormCreate notes={notes} setNotes={setNotes} />
-      )}
+      {!search && <FormCreate notes={notes} setNotes={setNotes} />}
 
       <NoteList
         notes={search ? searchedNotes : notes}
